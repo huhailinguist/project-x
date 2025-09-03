@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Singer Survey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .survey-form {
+            padding: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        .singer-option {
+            display: block;
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .singer-option:hover {
+            background-color: #e9ecef;
+        }
+        
+        .singer-option.selected {
+            background-color: #4cc9f0;
+            color: white;
+            border-color: #3ba0c4;
+        }
+        
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .results {
+            display: none;
+            padding: 25px;
+        }
+        
+        .results h2 {
+            color: #ff7e5f;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .result-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .result-singer {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .result-bar {
+            height: 20px;
+            background: linear-gradient(90deg, #4cc9f0, #3ba0c4);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .vote-again {
+            background-color: #4cc9f0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Favorite Singer Survey</h1>
+            <p class="description">Vote for your favorite singer and see results in real-time</p>
+        </header>
+        
+        <div class="survey-form" id="surveyForm">
+            <div class="form-group">
+                <label>Select your favorite singer:</label>
+                <label class="singer-option">
+                    <input type="radio" name="singer" value="Taylor Swift"> Taylor Swift
+                </label>
+                <label class="singer-option">
+                    <input type="radio" name="singer" value="Ed Sheeran"> Ed Sheeran
+                </label>
+                <label class="singer-option">
+                    <input type="radio" name="singer" value="Beyoncé"> Beyoncé
+                </label>
+                <label class="singer-option">
+                    <input type="radio" name="singer" value="The Weeknd"> The Weeknd
+                </label>
+                <label class="singer-option">
+                    <input type="radio" name="singer" value="Ariana Grande"> Ariana Grande
+                </label>
+                <label class="singer-option">
+                    <input type="radio" name="singer" value="Drake"> Drake
+                </label>
+                <label class="singer-option">
+                    <input type="radio" name="singer" value="Billie Eilish"> Billie Eilish
+                </label>
+                <label class="singer-option">
+                    <input type="radio" name="singer" value="Bruno Mars"> Bruno Mars
+                </label>
+                <label class="singer-option">
+                    <input type="radio" name="singer" value="Dua Lipa"> Dua Lipa
+                </label>
+                <label class="singer-option">
+                    <input type="radio" name="singer" value="Justin Bieber"> Justin Bieber
+                </label>
+            </div>
+            
+            <button class="submit-btn" id="submitVote">Submit Vote</button>
+        </div>
+        
+        <div class="results" id="resultsSection">
+            <h2>Survey Results</h2>
+            <div id="resultsContainer"></div>
+            <button class="vote-again" id="voteAgain">Vote Again</button>
+        </div>
+        
+        <footer>
+            <p>This is a client-side only example. Results are stored in your browser.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize votes in localStorage if not exists
+            if (!localStorage.getItem('singerVotes')) {
+                const initialVotes = {
+                    'Taylor Swift': 0,
+                    'Ed Sheeran': 0,
+                    'Beyoncé': 0,
+                    'The Weeknd': 0,
+                    'Ariana Grande': 0,
+                    'Drake': 0,
+                    'Billie Eilish': 0,
+                    'Bruno Mars': 0,
+                    'Dua Lipa': 0,
+                    'Justin Bieber': 0
+                };
+                localStorage.setItem('singerVotes', JSON.stringify(initialVotes));
+            }
+            
+            const singerOptions = document.querySelectorAll('.singer-option');
+            const submitBtn = document.getElementById('submitVote');
+            const surveyForm = document.getElementById('surveyForm');
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const voteAgainBtn = document.getElementById('voteAgain');
+            
+            // Add click event to options for better UX
+            singerOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    singerOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    this.querySelector('input[type="radio"]').checked = true;
+                });
+            });
+            
+            // Handle vote submission
+            submitBtn.addEventListener('click', function() {
+                const selectedSinger = document.querySelector('input[name="singer"]:checked');
+                
+                if (!selectedSinger) {
+                    alert('Please select a singer before voting.');
+                    return;
+                }
+                
+                // Update vote count
+                const votes = JSON.parse(localStorage.getItem('singerVotes'));
+                votes[selectedSinger.value]++;
+                localStorage.setItem('singerVotes', JSON.stringify(votes));
+                
+                // Show results
+                showResults();
+            });
+            
+            // Show results function
+            function showResults() {
+                surveyForm.style.display = 'none';
+                resultsSection.style.display = 'block';
+                
+                const votes = JSON.parse(localStorage.getItem('singerVotes'));
+                const totalVotes = Object.values(votes).reduce((a, b) => a + b, 0);
+                
+                // Clear previous results
+                resultsContainer.innerHTML = '';
+                
+                // Create result elements
+                for (const [singer, count] of Object.entries(votes)) {
+                    const percentage = totalVotes > 0 ? (count / totalVotes) * 100 : 0;
+                    
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'result-item';
+                    
+                    const singerInfo = document.createElement('div');
+                    singerInfo.className = 'result-singer';
+                    singerInfo.innerHTML = `
+                        <span>${singer}</span>
+                        <span>${count} votes (${percentage.toFixed(1)}%)</span>
+                    `;
+                    
+                    const barContainer = document.createElement('div');
+                    barContainer.style.backgroundColor = '#e9ecef';
+                    barContainer.style.borderRadius = '10px';
+                    barContainer.style.height = '20px';
+                    barContainer.style.marginTop = '5px';
+                    
+                    const bar = document.createElement('div');
+                    bar.className = 'result-bar';
+                    bar.style.width = '0%'; // Start at 0 for animation
+                    bar.style.height = '100%';
+                    bar.style.borderRadius = '10px';
+                    
+                    barContainer.appendChild(bar);
+                    resultItem.appendChild(singerInfo);
+                    resultItem.appendChild(barContainer);
+                    resultsContainer.appendChild(resultItem);
+                    
+                    // Animate the bar
+                    setTimeout(() => {
+                        bar.style.width = `${percentage}%`;
+                    }, 100);
+                }
+            }
+            
+            // Vote again button
+            voteAgainBtn.addEventListener('click', function() {
+                resultsSection.style.display = 'none';
+                surveyForm.style.display = 'block';
+                
+                // Clear selection
+                document.querySelectorAll('input[name="singer"]').forEach(input => {
+                    input.checked = false;
+                });
+                singerOptions.forEach(opt => opt.classList.remove('selected'));
+            });
+        });
+    </script>
+</body>
+</html>
